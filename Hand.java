@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.HashMap;
 
 public class Hand implements Comparable {
    private ArrayList<Card> hand;
@@ -33,12 +34,15 @@ public class Hand implements Comparable {
    High Card
    WORST
    */
+
+
    public String handValue() {
      return "TODO: String of Best Hand; may need helper methods";
    }
 
    public int compareTo(Object x){
       Hand other = (Hand)x;
+      //player #1 wins print 1 player #2 -1
       //TODO: Compare hands by ordering above; return -1, 1, or 0
       return -1;
    }

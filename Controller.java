@@ -8,7 +8,7 @@ public class Controller
 
    public static void main(String[] args){
       deck = new Deck();
-      System.out.println(deck);
+      //System.out.println(deck);
       hand1 = new Hand();
       hand2 = new Hand();
 
@@ -39,9 +39,9 @@ public class Controller
       int result = hand1.compareTo(hand2);
       if(result == 1)
         return "Player 1 Wins";
-      if(result == -1)
+      else if(result == -1)
         return "Player 2 Wins";
-      if(result == 0)
+      else
         return "Tie";
    }
 }

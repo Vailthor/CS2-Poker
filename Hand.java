@@ -3,13 +3,10 @@ import java.util.HashMap;
 
 public class Hand implements Comparable {
    private ArrayList<Card> hand;
-   private String handSuit;
-   private int t;
 
    public Hand(){
       hand = new ArrayList<Card>();
-      handSuit = "";
-      t = 0;
+
    }
 
    public void add(Card c){
@@ -47,14 +44,21 @@ public class Hand implements Comparable {
    public String valueHelper()
    {
      HashMap<Integer, Integer> numinHand = new HashMap<Integer, Integer>();
-     for(Card x : hand)
+     int t = 0;
+     String handSuit = "";
+     for(Card x : this.hand)
      {
-       if(t == 0)
-         handSuit = x.toString().substring(1);
-       else
-         if(handSuit == x.toString().substring(1)){}
+      if(t == 0)
+         handSuit = x.suit;
+      else
+      {
+         if(handSuit.equals(x.suit))
+            {}
          else
-            handSuit = "different";
+            handSuit = "differnt";
+      }
+      t++;
+      
        if(numinHand.containsKey(x.value))
        {
          int temp = numinHand.get(x.value);
@@ -62,9 +66,10 @@ public class Hand implements Comparable {
        }
        else
        {
-         numinHand.put(x.value, 0);
+         numinHand.put(x.value, 1);
        }
      }
+     System.out.println(handSuit);
      if(handSuit.equals("differnt"))
      {
          //Four of a Kind
@@ -75,13 +80,13 @@ public class Hand implements Comparable {
             return "FH";
          //Straight
          for(int x: numinHand.keySet())
-            if(numinHand.containsKey(x+5))
-               return "S";
+            if(numinHand.containsKey(x+5) && numinHand.containsKey(x+4) && numinHand.containsKey(x+3) && numinHand.containsKey(x+2) && numinHand.containsKey(x+1) || numinHand.containsKey(x-5) && numinHand.containsKey(x-4) && numinHand.containsKey(x-3) && numinHand.containsKey(x-2) && numinHand.containsKey(x-1))
+               return "NS";
          //Three of a Kind
          if(numinHand.containsValue(3))
             return "TK";
          //Two Pair and One Pair
-         String temp = "P";
+         String temp = "OP";
          String temp2 = "TP";
          if(numinHand.containsValue(2))
          {
@@ -101,9 +106,15 @@ public class Hand implements Comparable {
             else
                return temp2;
          }
+         else
+         {
+            
+         }
+        
       }
       else
       {
+      
          //Royal Flush
          if(numinHand.containsKey(14) && numinHand.containsKey(13) && numinHand.containsKey(12) && numinHand.containsKey(11) && numinHand.containsKey(10))
          {
@@ -116,21 +127,48 @@ public class Hand implements Comparable {
          }
          //Flush
          else
-            return "F";
+            return "NF";
+      
+            
       }
-      int highest = 0;
-      for(int x: numinHand.keySet())
-      {
-         if(highest < x)
-            highest = x;
-      }
-      return "HC" + highest;
+
+      return "HC";
+   }
+
+   public int score(Hand x)
+   {
+      String m = x.handValue().substring(0,2);
+      if(m.equals("RF"))
+         return 10;
+      else if(m.equals("SF"))
+         return 9;
+      else if(m.equals("FK"))
+         return 8;
+      else if(m.equals("FH"))
+         return 7;
+      else if(m.equals("NF"))
+         return 6;
+      else if(m.equals("NS"))
+         return 5;
+      else if(m.equals("TK"))
+         return 4;
+      else if(m.equals("TP"))
+         return 3;
+      else if(m.equals("OP"))
+         return 2;
+      else
+         return 1;         
    }
 
    public int compareTo(Object x){
       Hand other = (Hand)x;
+      if(score(this) > score(other))
+         return 1;
+      else if(score(other) > score(this))
+         return -1;
+      else
+         return 0;
       //player #1 wins print 1 player #2 -1
       //TODO: Compare hands by ordering above; return -1, 1, or 0
-      return -1;
    }
 }

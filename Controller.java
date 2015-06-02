@@ -21,8 +21,8 @@ public class Controller
       System.out.println(hand1);
       System.out.println(hand2);
 
-      System.out.println("Best Hand: " + hand1.handValue());
-      System.out.println("Best Hand: " + hand2.handValue());
+      System.out.println("Best Hand: " + hand1.handValue().substring(0,2));
+      System.out.println("Best Hand: " + hand2.handValue().substring(0,2));
       System.out.println(findWinner());
    }
 

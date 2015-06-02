@@ -45,31 +45,31 @@ public class Hand implements Comparable {
    {
      HashMap<Integer, Integer> numinHand = new HashMap<Integer, Integer>();
      int t = 0;
-     String handSuit = "";
-     for(Card x : this.hand)
+     String handSuit = "a";
+     //for(Card x : this.hand)
+     for(int x = 0; x < this.hand.size(); x++)
      {
       if(t == 0)
-         handSuit = x.suit;
+         handSuit = this.hand.get(x).suit;
       else
       {
-         if(handSuit.equals(x.suit))
+         if(handSuit.equals(this.hand.get(x).suit))
             {}
          else
             handSuit = "differnt";
       }
       t++;
       
-       if(numinHand.containsKey(x.value))
+       if(numinHand.containsKey(this.hand.get(x).value))
        {
-         int temp = numinHand.get(x.value);
-         numinHand.put(x.value, temp++);
+         int temp = numinHand.get(this.hand.get(x).value);
+         numinHand.put(this.hand.get(x).value, ++temp);
        }
        else
        {
-         numinHand.put(x.value, 1);
+         numinHand.put(this.hand.get(x).value, 1);
        }
      }
-     System.out.println(handSuit);
      if(handSuit.equals("differnt"))
      {
          //Four of a Kind
@@ -92,14 +92,13 @@ public class Hand implements Comparable {
          {
             for(int x: numinHand.keySet())
             {
-               
-               if(numinHand.get(x) == 2 && temp.length() > 1)
-                  temp2 = temp2 + x;
-               if(numinHand.get(x) == 2 && temp.length() == 1)
+               if(numinHand.get(x) == 2 && temp.length() == 2)
                {
                   temp = temp + x;
                   temp2 = temp2 + x;  
                }
+               else if(numinHand.get(x) == 2 && temp.length() > 2)
+                  temp2 = temp2 + x;
             }
             if(temp.length() == temp2.length())
                return temp;
@@ -132,7 +131,7 @@ public class Hand implements Comparable {
             
       }
 
-      return "HC";
+      return "HC" + this.hand.get(this.hand.size()-1).value;
    }
 
    public int score(Hand x)
